@@ -2,279 +2,202 @@ import streamlit as st
 import pandas as pd
 import os
 
-st.set_page_config(page_title="Dịch vụ thuê xe",layout="wide")
+st.set_page_config(page_title="Chauffeur & Limousine", page_icon="🚗", layout="wide")
 
-# ================= CSS =================
+# =========================
+# CSS GIAO DIỆN
+# =========================
 
 st.markdown("""
 <style>
 
-/* Thu nhỏ sidebar */
-section[data-testid="stSidebar"] {
-    width:190px !important;
+/* sidebar nhỏ gọn */
+section[data-testid="stSidebar"]{
+    width:210px !important;
 }
 
-/* Khung menu chung */
-div[data-testid="stSidebar"] div[role="radiogroup"]{
+/* khung menu */
+div[role="radiogroup"]{
     background:#6ccf8f;
     padding:8px;
     border-radius:10px;
 }
 
-/* Từng mục menu */
-div[data-testid="stSidebar"] label{
+/* từng mục menu */
+div[role="radiogroup"] label{
     display:flex;
     justify-content:center;
     align-items:center;
     color:white !important;
     padding:8px;
     height:36px;
-    border-radius:6px;
+    margin:3px 0;
     font-weight:600;
 }
 
-/* Hover */
-div[data-testid="stSidebar"] label:hover{
+/* hover */
+div[role="radiogroup"] label:hover{
     background:#57b876;
+    border-radius:6px;
 }
 
-/* Bỏ vòng tròn radio */
-div[data-testid="stSidebar"] input[type="radio"]{
+/* ẩn vòng tròn radio */
+input[type="radio"]{
     display:none;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ================= HEADER =================
+# =========================
+# HEADER
+# =========================
 
-if "page" not in st.session_state:
-    st.session_state.page="Trang chủ"
-
-col1,col2,col3=st.columns([2,6,2])
+col1, col2 = st.columns([1,4])
 
 with col1:
     if os.path.exists("logo.png"):
-        st.image("logo.png",width=120)
+        st.image("logo.png", width=150)
 
 with col2:
-
-    m1,m2,m3,m4=st.columns(4)
-
-    if m1.button("Trang chủ"):
-        st.session_state.page="Trang chủ"
-
-    if m2.button("Các dòng xe"):
-        st.session_state.page="Xe"
-
-    if m3.button("Bảng giá"):
-        st.session_state.page="Bảng giá"
-
-    if m4.button("Liên hệ đặt xe"):
-        st.session_state.page="Liên hệ"
-
-with col3:
-    st.markdown("☎ **0948585816**")
-    st.caption("Hotline 24/7")
+    st.title("Chauffeur & Limousine")
+    st.write("Đưa đón sân bay • Công tác • Du lịch • Sự kiện")
 
 st.divider()
 
-menu=st.session_state.page
+# =========================
+# MENU
+# =========================
 
-# ================= TRANG CHỦ =================
+menu = st.sidebar.radio(
+    "MENU",
+    ["🏠 Trang chủ","💰 Bảng giá","📅 Đặt xe","📞 Liên hệ"]
+)
 
-if menu=="Trang chủ":
+# =========================
+# TRANG CHỦ
+# =========================
 
-    st.title("Dịch vụ cho thuê xe")
+if menu == "🏠 Trang chủ":
 
-    c1,c2,c3,c4=st.columns(4)
+    st.header("Các dòng xe của chúng tôi")
 
-    with c1:
-        st.markdown('<div class="service-box">🚗<br>Thuê xe tháng</div>',unsafe_allow_html=True)
+    cars = {
+        "Toyota Innova":[
+        "Toyota Innova.jpg",
+        "Toyota Innova3.jpg",
+        "Toyota Innova4.jpg"
+        ],
 
-    with c2:
-        st.markdown('<div class="service-box">✈️<br>Đưa đón sân bay</div>',unsafe_allow_html=True)
+        "Toyota Fortuner":[
+        "Toyota Fortuner.jpg",
+        "Toyota Fortuner3.jpg",
+        "Toyota Fortuner4.jpg"
+        ],
 
-    with c3:
-        st.markdown('<div class="service-box">🏢<br>Đón khách công tác</div>',unsafe_allow_html=True)
+        "Toyota Camry":[
+        "Toyota Camry.jpg",
+        "Toyota Camry3.jpg",
+        "Toyota Camry4.jpg"
+        ],
 
-    with c4:
-        st.markdown('<div class="service-box">🌏<br>Du lịch</div>',unsafe_allow_html=True)
-
-# ================= CÁC DÒNG XE =================
-
-elif menu=="Xe":
-
-    st.header("Danh mục xe")
-
-    typecar=st.selectbox(
-    "Chọn dòng xe",
-    ["Sedan","SUV","MPV","Xe nhân viên"]
-    )
-
-    cars={
-
-    "Sedan":[
-    "Toyota Camry",
-    "Toyota Vios"
-    ],
-
-    "SUV":[
-    "Toyota Fortuner",
-    "Ford Everest"
-    ],
-
-    "MPV":[
-    "Toyota Innova",
-    "Kia Carnival"
-    ],
-
-    "Xe nhân viên":[
-    "Transit",
-    "Universe"
-    ]
+        "Kia Carnival":[
+        "Kia Carnival.jpg",
+        "Kia Carnival3.jpg",
+        "Kia Carnival4.jpg"
+        ]
     }
 
-    cols=st.columns(4)
+    cols = st.columns(4)
 
-    for i,car in enumerate(cars[typecar]):
+    for i,(car,images) in enumerate(cars.items()):
 
-        with cols[i%4]:
+        with cols[i]:
 
-            img=car.replace(" ","").lower()+".jpg"
+            if os.path.exists(images[0]):
+                st.image(images[0], width=300)
 
-            if os.path.exists(img):
-                st.image(img,use_container_width=True)
+            if st.button(f"Xem ảnh {car}", key=car):
 
-            if st.button(f"Xem {car}",key=car):
+                st.subheader(car)
 
-                st.session_state.selected_car=car
+                for img in images:
 
-    # ===== TRANG CHI TIẾT XE =====
+                    if os.path.exists(img):
+                        st.image(img, use_container_width=True)
 
-    if "selected_car" in st.session_state:
+# =========================
+# BẢNG GIÁ
+# =========================
 
-        car=st.session_state.selected_car
-
-        st.divider()
-        st.subheader(car)
-
-        # gallery ảnh
-
-        st.write("Gallery ảnh xe")
-
-        gallery=[
-        car.replace(" ","").lower()+".jpg",
-        car.replace(" ","").lower()+"1.jpg",
-        car.replace(" ","").lower()+"2.jpg",
-        car.replace(" ","").lower()+"3.jpg"
-        ]
-
-        gcols=st.columns(4)
-
-        for i,img in enumerate(gallery):
-
-            if os.path.exists(img):
-
-                with gcols[i%4]:
-
-                    st.image(img,use_container_width=True)
-
-        st.write("Xe phù hợp cho đưa đón sân bay, công tác và du lịch.")
-
-        st.subheader("Thông tin dịch vụ")
-
-        data={
-        "Dịch vụ":["Thuê ngày","Thuê tháng","Đưa đón sân bay"],
-        "Giá":["1.200.000","18.000.000","450.000"]
-        }
-
-        st.table(pd.DataFrame(data))
-
-# ================= BẢNG GIÁ =================
-
-elif menu=="Bảng giá":
+elif menu == "💰 Bảng giá":
 
     st.header("Bảng giá thuê xe")
 
-    tab1,tab2,tab3=st.tabs([
-    "Thuê tháng",
-    "Thuê ngày",
-    "Sân bay"
-    ])
+    if st.button("⚡ Xem bảng giá"):
 
-    with tab1:
+        try:
+            df = pd.read_excel("khung_bao_gia.xlsx")
+            st.dataframe(df,use_container_width=True)
 
-        if os.path.exists("banggiathang.xlsx"):
-            df=pd.read_excel("banggiathang.xlsx")
-            st.dataframe(df)
+        except:
+            st.error("Không tìm thấy file Excel báo giá")
 
-    with tab2:
+# =========================
+# ĐẶT XE
+# =========================
 
-        if os.path.exists("banggiangay.xlsx"):
-            df=pd.read_excel("banggiangay.xlsx")
-            st.dataframe(df)
+elif menu == "📅 Đặt xe":
 
-    with tab3:
+    st.header("Form đặt xe")
 
-        if os.path.exists("banggiasanbay.xlsx"):
-            df=pd.read_excel("banggiasanbay.xlsx")
-            st.dataframe(df)
+    name = st.text_input("Tên khách hàng")
 
-# ================= FORM ĐẶT XE =================
+    phone = st.text_input("Số điện thoại")
 
-elif menu=="Liên hệ":
+    car = st.selectbox(
+        "Chọn xe",
+        ["Toyota Innova","Toyota Fortuner","Toyota Camry","Kia Carnival"]
+    )
 
-    st.header("Liên hệ đặt xe")
+    date = st.date_input("Ngày thuê")
+
+    note = st.text_area("Yêu cầu thêm")
+
+    if st.button("Gửi yêu cầu"):
+
+        if name and phone:
+
+            st.success("Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại!")
+
+        else:
+
+            st.warning("Vui lòng nhập tên và số điện thoại")
+
+# =========================
+# LIÊN HỆ
+# =========================
+
+elif menu == "📞 Liên hệ":
+
+    st.header("Thông tin liên hệ")
 
     st.write("Ha Noi Tourist and Trading")
-    st.write("📍 829 Bạch Đằng - Hà Nội")
-    st.write("☎ Hotline: 0948585816")
 
-    st.markdown("[Chat Zalo](https://zalo.me/0948585816)")
+    st.write("📍 Head office: 49 Hai Ba Trung, Hoan Kiem, Hanoi")
 
-    st.divider()
+    st.write("📍 Executive office: 829 Bạch Đằng, Hà Nội")
 
-    st.subheader("Form đăng ký thuê xe")
+    st.write("📞 Hotline: +84 4 39361030")
 
-    with st.form("booking"):
+    st.write("📞 Hotline: +84 439367602")
 
-        name=st.text_input("Tên khách hàng")
+    st.subheader("Bản đồ")
 
-        phone=st.text_input("Số điện thoại")
-
-        email=st.text_input("Email")
-
-        service=st.selectbox(
-        "Loại dịch vụ",
-        ["Thuê ngày","Thuê tháng","Đưa đón sân bay","Đi tỉnh"]
-        )
-
-        car=st.selectbox(
-        "Loại xe",
-        ["Sedan","SUV","MPV","Limousine"]
-        )
-
-        date=st.date_input("Ngày sử dụng")
-
-        location=st.text_input("Điểm đón")
-
-        destination=st.text_input("Điểm đến")
-
-        note=st.text_area("Yêu cầu thêm")
-
-        submit=st.form_submit_button("Gửi yêu cầu")
-
-        if submit:
-
-            if name and phone:
-
-                st.success("Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại!")
-
-            else:
-
-                st.warning("Vui lòng nhập tên và số điện thoại")
+    st.components.v1.iframe(
+        "https://maps.google.com/maps?q=829%20bach%20dang%20ha%20noi&t=&z=15&ie=UTF8&iwloc=&output=embed",
+        height=450
+    )
 
 st.divider()
-
 st.caption("© 2026 Dịch vụ cho thuê xe")
