@@ -11,38 +11,36 @@ st.markdown("""
 
 /* Thu nhỏ sidebar */
 section[data-testid="stSidebar"] {
-    width:100px !important;
-}
-
-/* Khoảng cách menu */
-section[data-testid="stSidebar"] .stRadio > div{
-    gap:8px;
+    width:190px !important;
 }
 
 /* Khung menu chung */
-section[data-testid="stSidebar"] .stRadio{
-    background-color:#6ccf8f;
+div[data-testid="stSidebar"] div[role="radiogroup"]{
+    background:#6ccf8f;
     padding:8px;
-    border-radius:8px;
+    border-radius:10px;
 }
 
 /* Từng mục menu */
-section[data-testid="stSidebar"] .stRadio label{
-    background-color:transparent;
-    color:white;
-    padding:10px;
-    border:none;
+div[data-testid="stSidebar"] label{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-weight:bold;
-    height:40px;
+    color:white !important;
+    padding:8px;
+    height:36px;
+    border-radius:6px;
+    font-weight:600;
 }
 
 /* Hover */
-section[data-testid="stSidebar"] .stRadio label:hover{
-    background-color:#57b876;
-    border-radius:6px;
+div[data-testid="stSidebar"] label:hover{
+    background:#57b876;
+}
+
+/* Bỏ vòng tròn radio */
+div[data-testid="stSidebar"] input[type="radio"]{
+    display:none;
 }
 
 </style>
