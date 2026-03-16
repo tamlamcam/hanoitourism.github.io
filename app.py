@@ -9,41 +9,44 @@ st.set_page_config(page_title="Dịch vụ thuê xe",layout="wide")
 st.markdown("""
 <style>
 
-body{
-background:#eaf7ee;
+/* Thu nhỏ sidebar */
+section[data-testid="stSidebar"] {
+    width:100px !important;
 }
 
-section[data-testid="stSidebar"]{
-display:none;
+/* Khoảng cách menu */
+section[data-testid="stSidebar"] .stRadio > div{
+    gap:4px;
 }
 
-.block-container{
-margin-top:60px;
+/* Khung menu chung */
+section[data-testid="stSidebar"] .stRadio{
+    background-color:#6ccf8f;
+    padding:8px;
+    border-radius:8px;
 }
 
-/* card xe */
-
-.car-card{
-border-radius:10px;
-overflow:hidden;
+/* Từng mục menu */
+section[data-testid="stSidebar"] .stRadio label{
+    background-color:transparent;
+    color:white;
+    padding:10px;
+    border:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    height:40px;
 }
 
-.car-card img{
-height:200px;
-object-fit:cover;
-}
-
-.service-box{
-background:white;
-padding:20px;
-border-radius:10px;
-text-align:center;
-font-size:18px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+/* Hover */
+section[data-testid="stSidebar"] .stRadio label:hover{
+    background-color:#57b876;
+    border-radius:6px;
 }
 
 </style>
-""",unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # ================= HEADER =================
 
