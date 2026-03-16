@@ -16,7 +16,7 @@ section[data-testid="stSidebar"] {
 
 /* Khoảng cách menu */
 section[data-testid="stSidebar"] .stRadio > div{
-    gap:4px;
+    gap:8px;
 }
 
 /* Khung menu chung */
